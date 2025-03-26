@@ -18,6 +18,8 @@ welcome_text = st.markdown("<div style='text-align: left; padding: 20px;'><h1 st
 subtitle_text = st.markdown("<div style='text-align: left; padding: 20px;'><h2 style='color: #4CAF50; display: inline-block;>to the</h2></div>", unsafe_allow_html=True)
 butterfly_text = st.markdown("<div style='text-align: left; padding: 20px;'><h1 style='color: #e8209c; display: inline-block;>Butterfly Model</h1></div>", unsafe_allow_html=True)
 
+st.write(welcome_text)
+
 #Dictionary of Butterfly Names
 dic_butterfly = {
  np.str_('ADONIS'): 0,
