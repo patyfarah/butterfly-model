@@ -206,8 +206,7 @@ if uploaded_file is not None:
     confidence = predictions[0, predicted_class]
 
     # Load class mapping
-    train_directory = "/content/train"
-    class_mapping = create_class_mapping_website(train_directory)
+    class_mapping = dic_butterfly 
     class_name = next((name for name, index in class_mapping.items() if index == predicted_class), f"Class {predicted_class[0]}")
 
     # Styling for the subheader
