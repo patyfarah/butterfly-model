@@ -1,6 +1,6 @@
 streamlit
 tensorflow
-tenserflow.keras
+keras
 numpy
 pandas
 google-api-python-client
