@@ -140,7 +140,7 @@ model_options = {
 "Butterfly Model1": "https://drive.google.com/file/d/1t8QUiYFOWCMEoXMFWIfdf3T3DjUHBQJT/view?usp=sharing",
 }
 selected_model = st.selectbox("Select Model", list(model_options.keys()))
-run_image_classification(model_options[selected_model])
+#run_image_classification(model_options[selected_model])
 
 
 # Function to preprocess the image
