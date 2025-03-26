@@ -171,6 +171,7 @@ if uploaded_file is not None:
     # Predict the class
     predictions = model.predict(img_array)
     predicted_class = np.argmax(predictions, axis=1)[0]  # Convert to a scalar value
+    st.write("predictio",predictions)
     confidence = predictions[0, predicted_class]
 
     # Get butterfly name from dictionary
