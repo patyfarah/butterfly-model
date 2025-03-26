@@ -1,6 +1,6 @@
 streamlit
---upgrade tensorflow
-keras
+tensorflow
+tenserflow.keras
 numpy
 pandas
 google-api-python-client
