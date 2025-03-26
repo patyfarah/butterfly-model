@@ -1,95 +1,166 @@
+# Import statements
 import streamlit as st
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.image import load_img, img_to_array
+import tensorflow as tf
+from keras.preprocessing import image
+from keras.applications.vgg16 import preprocess_input
 import numpy as np
-from PIL import Image
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileDownload
+import pandas as pd
+from datetime import datetime
 import os
-import tempfile
 
-def load_and_prepare_image(image_path, target_size):
-    """Loads and preprocesses the image for prediction."""
-    image = load_img(image_path, target_size=target_size)
-    image = img_to_array(image)
-    image = np.expand_dims(image, axis=0)
-    image = image / 255.0  # Normalize the image to [0, 1]
-    return image
+# Streamlit App
+st.set_page_config(page_title="Butterfly Classification Model", layout="wide")
 
-def download_model_from_gdrive(file_id, destination):
-    """Downloads a file from Google Drive given its file ID."""
-    try:
-        from google_auth_oauthlib.flow import InstalledAppFlow
-        from googleapiclient.http import MediaIoBaseDownload
-        from googleapiclient.discovery import build
-        import io
-        from google.oauth2.credentials import Credentials
+# Added a welcoming message with formatted text
+welcome_text = st.markdown("<div style='text-align: left; padding: 20px;'><h1 style='color: #e8209c; display: inline-block;>Welcome</h1></div>", unsafe_allow_html=True)
+subtitle_text = st.markdown("<div style='text-align: left; padding: 20px;'><h2 style='color: #4CAF50; display: inline-block;>to the</h2></div>", unsafe_allow_html=True)
+butterfly_text = st.markdown("<div style='text-align: left; padding: 20px;'><h1 style='color: #e8209c; display: inline-block;>Butterfly Model</h1></div>", unsafe_allow_html=True)
 
-        # Define the scope
-        SCOPES = ['https://www.googleapis.com/auth/drive']
+def create_class_mapping_website(directory):
+    """
+    Create a mapping from class folder names to unique identifiers.
 
-        # Authenticate using the token.json file
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-        service = build('drive', 'v3', credentials=creds)
+    Parameters:
+    - directory (str): Path to the directory containing class subfolders.
 
-        # Request the file
-        request = service.files().get_media(fileId=file_id)
-        fh = io.FileIO(destination, 'wb')
-        downloader = MediaIoBaseDownload(fh, request)
-        done = False
-        while not done:
-            status, done = downloader.next_chunk()
-        return True
-    except Exception as e:
-        st.error(f"Error downloading the model: {e}")
-        return False
+    Returns:
+    - dict: Mapping from class folder names to unique identifiers.
+    """
+    class_folders = sorted(os.listdir(directory))
+    class_mapping = {folder: i for i, folder in enumerate(class_folders)}
+    return class_mapping
+    
+def run_image_classification(model_path):
+    """
+    Run image classification with a given model.
 
-def main():
-    st.title("Keras Model Image Classifier")
+    Parameters:
+        model_path (str): Path to the trained model file.
 
-    # Sidebar for model selection from Google Drive
-    st.sidebar.header("Load Model from Google Drive")
-    gdrive_file_id = st.sidebar.text_input("Enter Google Drive file ID for the model:")
-    if st.sidebar.button("Download Model"):
-        if gdrive_file_id:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".h5") as tmp_file:
-                model_path = tmp_file.name
-                success = download_model_from_gdrive(gdrive_file_id, model_path)
-                if success:
-                    st.session_state["model_path"] = model_path
-                    st.success("Model downloaded successfully!")
+    Returns:
+        None
+    """
+    # Load your trained model
+    model = tf.keras.models.load_model(model_path)
 
-    # File browser for selecting an image
-    st.sidebar.header("Select Image")
-    uploaded_image = st.sidebar.file_uploader("Upload an image to classify:", type=["png", "jpg", "jpeg"])
+    # Function to preprocess the image
+    def preprocess_img(img_path):
+      # Load image and check its size
+      img = image.load_img(img_path)
 
-    # Load the model if available
-    if "model_path" in st.session_state:
-        try:
-            model = load_model(st.session_state["model_path"])
-            st.success("Model loaded successfully!")
+      # Check if the image is already of size 224x224
+      if img.size == (224, 224):
+          # No changes needed, return the image as it is
+          img_array = image.img_to_array(img)
+          img_array = np.expand_dims(img_array, axis=0)
+          img_array = preprocess_input(img_array)
+          return img_array
+      else:
+          # Resize the image to 224x224 and perform preprocessing
+          img = image.load_img(img_path, target_size=(224, 224))
+          img_array = image.img_to_array(img)
+          img_array = np.expand_dims(img_array, axis=0)
+          img_array = preprocess_input(img_array)
+          return img_array
 
-            # Display and classify the uploaded image
-            if uploaded_image:
-                # Display the selected image
-                image = Image.open(uploaded_image)
-                st.image(image, caption="Uploaded Image", use_column_width=True)
 
-                # Predict the class of the image
-                if st.button("Classify Image"):
-                    processed_image = load_and_prepare_image(uploaded_image, target_size=model.input_shape[1:3])
-                    prediction = model.predict(processed_image)
+    # Streamlit App
+    st.markdown(
+        """
+        <div style='
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out;
+        '>
+            <h1 style='font-size:32px; color:#3366ff; text-align:center;'>Discover Butterfly or Moth Species</h1>
+            <p style='font-size:18px; color:black; text-align:center;'>
+                Upload your favorite butterfly/Moth picture and uncover its enchanting species!
+            </p>
+        </div>
 
-                    # Assuming the model output is a probability distribution
-                    predicted_class = np.argmax(prediction, axis=1)[0]
-                    confidence = np.max(prediction) * 100
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
-                    st.write(f"**Predicted Class:** {predicted_class}")
-                    st.write(f"**Confidence:** {confidence:.2f}%")
-        except Exception as e:
-            st.error(f"Error loading model: {e}")
+    # Choose an image
+    uploaded_file = st.file_uploader("Choose an image...", type="jpg")
+
+    if uploaded_file is not None:
+        # Display the uploaded image
+        st.image(uploaded_file, caption='Uploaded Image.', use_column_width=True)
+
+        # Preprocess the image
+        img_array = preprocess_img(uploaded_file)
+
+        # Make predictions
+        predictions = model.predict(img_array)
+        predicted_class = tf.argmax(predictions, axis=1).numpy()
+        confidence = predictions[0, predicted_class]
+
+        # Load class mapping
+        train_directory = "/content/train"
+        class_mapping = create_class_mapping_website(train_directory)
+        class_name = next((name for name, index in class_mapping.items() if index == predicted_class), f"Class {predicted_class[0]}")
+
+        # Styling for the subheader
+        subheader_style = """
+            background-color: #4682b4;  /* SteelBlue color */
+            color: #ffffff;  /* White color */
+        """
+        # Styling for the results container
+        result_container_style = """
+            background-color: #f8f8f8;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out;
+        """
+
+        # Styling for the species name
+        species_name_style = """
+            font-size: 24px;
+            color: #2e8b57;  /* SeaGreen color */
+            margin-bottom: 10px;
+        """
+
+        # Styling for the confidence
+        confidence_style = """
+            font-size: 18px;
+            color: #4169e1;  /* RoyalBlue color */
+        """
+
+        # Apply the styles
+        st.markdown(
+            f"""
+            <div style='{result_container_style}'>
+                 <h2 style='{subheader_style}'>🦋 Your Butterfly/Moth Species Prediction 🌿</h2>
+                <h3 style='{species_name_style}'>{class_name}</h3>
+                <p style='{confidence_style}'>Confidence of Model: {confidence[0]:.2%}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+
     else:
-        st.info("Please download a model from Google Drive to get started.")
+        st.warning("Please upload an image to continue.")
 
-if __name__ == "__main__":
-    main()
+  # User option to choose the model
+  model_options = {
+    "ButterflyNet Model": "/content/ButterflyNet_Model.keras",
+    "EfficientNetB0 Model": "/content/custom_model_EfficientNetB0.keras",
+    "ResNet50 Model": "/content/resnet_custom_model.keras",
+    "VGG16 Model": "/content/vgg_custom_model.keras",
+  }
+  selected_model = st.selectbox("Select Model", list(model_options.keys()))
+  run_image_classification(model_options[selected_model])
+
