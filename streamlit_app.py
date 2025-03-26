@@ -171,9 +171,8 @@ if uploaded_file is not None:
     # Predict the class
     predictions = model.predict(img_array)
     predicted_class = np.argmax(predictions, axis=1)[0]  # Convert to a scalar value
-    st.write("predictio",predictions)
     confidence = predictions[0, predicted_class]
-
+    
     # Get butterfly name from dictionary
     class_name = dic_butterfly.get(predicted_class, "Unknown class")
 
@@ -182,7 +181,7 @@ if uploaded_file is not None:
         f"""
         <div style="background-color: #f8f8f8; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h2 style="background-color: #4682b4; color: white; padding: 10px;">🦋 Butterfly/Moth Species Prediction 🌿</h2>
-            <h3 style="font-size: 24px; color: #2e8b57;">{class_name}</h3>
+            <h3 style="font-size: 24px; color: #2e8b57;">{class_name} {predicted_class}</h3>
             <p style="font-size: 18px; color: #4169e1;">Confidence: {confidence * 100:.2f}%</p>
         </div>
         """,
