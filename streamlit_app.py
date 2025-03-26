@@ -121,7 +121,7 @@ dic_butterfly = {
 #@st.cache
 def load_model_from_url(model_url):
     # Download the model using gdown (Make sure the URL is a direct Google Drive link)
-    output_path = "/tmp/butterfly_model.keras"
+    output_path = "/tmp/butterfly_model.h5"
     gdown.download(model_url, output_path, quiet=False)
     model = tf.keras.models.load_model(output_path)
     return model
@@ -138,6 +138,7 @@ def preprocess_img(uploaded_file):
 model_options = {
     "Butterfly Model1": "https://drive.google.com/uc?export=download&id=1t8QUiYFOWCMEoXMFWIfdf3T3DjUHBQJT",  # Update this with the actual direct download link
     "Butterfly VGG16":"https://drive.google.com/uc?export=download&id=1Mz8yeVckw85VEIqgrsaLDVivyihtp7hW",
+    "EfficientNet": "https://drive.google.com/uc?export=download&id=15TcicdDmh9nRUUUtK_EsrKj9HevqNZSU/view?usp=sharing"
 }
 
 # Model selection
