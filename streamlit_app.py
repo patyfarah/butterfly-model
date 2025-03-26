@@ -118,6 +118,7 @@ dic_butterfly = {
  np.str_('ZEBRA LONG WING'): 99}
 
 # Function to download and load the model
+@st.cache
 def load_model_from_url(model_url):
     # Download the model using gdown (Make sure the URL is a direct Google Drive link)
     output_path = "/tmp/butterfly_model.keras"
