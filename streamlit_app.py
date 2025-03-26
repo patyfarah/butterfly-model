@@ -138,7 +138,7 @@ def preprocess_img(uploaded_file):
 model_options = {
     "Butterfly Model1": "https://drive.google.com/uc?export=download&id=1t8QUiYFOWCMEoXMFWIfdf3T3DjUHBQJT",  # Update this with the actual direct download link
     "Butterfly VGG16":"https://drive.google.com/uc?export=download&id=1Mz8yeVckw85VEIqgrsaLDVivyihtp7hW",
-    "EfficientNet": "https://drive.google.com/uc?export=download&id=15TcicdDmh9nRUUUtK_EsrKj9HevqNZSU/view?usp=sharing"
+    "EfficientNet": "https://drive.google.com/uc?export=download&id=15TcicdDmh9nRUUUtK_EsrKj9HevqNZSU"
 }
 
 # Model selection
