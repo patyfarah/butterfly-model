@@ -174,7 +174,9 @@ if uploaded_file is not None:
     confidence = predictions[0, predicted_class]
     
     # Get butterfly name from dictionary
-    class_name = dic_butterfly.get(predicted_class, "Unknown class")
+    class_mapping = dic_butterfly
+    class_name = next((name for name, index in class_mapping.items() if index == predicted_class), f"Class {predicted_class[0]}")
+
 
     # Styling the output
     st.markdown(
