@@ -1,5 +1,5 @@
 streamlit
-tensorflow
+--upgrade tensorflow
 keras
 numpy
 pandas
