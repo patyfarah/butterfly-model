@@ -3,4 +3,5 @@ tensorflow
 keras
 numpy
 pandas
+--upgrade google-api-python-client
 
