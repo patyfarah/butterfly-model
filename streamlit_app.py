@@ -155,13 +155,13 @@ def run_image_classification(model_path):
     else:
         st.warning("Please upload an image to continue.")
 
-  # User option to choose the model
-  model_options = {
-    "ButterflyNet Model": "/content/ButterflyNet_Model.keras",
-    "EfficientNetB0 Model": "/content/custom_model_EfficientNetB0.keras",
-    "ResNet50 Model": "/content/resnet_custom_model.keras",
-    "VGG16 Model": "/content/vgg_custom_model.keras",
-  }
-  selected_model = st.selectbox("Select Model", list(model_options.keys()))
-  run_image_classification(model_options[selected_model])
+# User option to choose the model
+model_options = {
+"ButterflyNet Model": "/content/ButterflyNet_Model.keras",
+"EfficientNetB0 Model": "/content/custom_model_EfficientNetB0.keras",
+"ResNet50 Model": "/content/resnet_custom_model.keras",
+"VGG16 Model": "/content/vgg_custom_model.keras",
+}
+selected_model = st.selectbox("Select Model", list(model_options.keys()))
+run_image_classification(model_options[selected_model])
 
