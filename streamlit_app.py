@@ -10,7 +10,7 @@ from io import BytesIO
 
 
 # Streamlit App
-st.set_page_config(page_title="Butterfly Classification Model", layout="centered")
+st.set_page_config(page_title="Butterfly Classification Models", layout="centered")
 
 # Welcome message
 st.markdown("<h1 style='color: #3366ff;'>Welcome to the Butterfly Model</h1>", unsafe_allow_html=True)
@@ -138,8 +138,8 @@ def preprocess_img(uploaded_file):
 
 # Available model options (make sure the links are direct downloadable URLs)
 model_options = {
-    "Butterfly Model1": "https://drive.google.com/uc?export=download&id=1t8QUiYFOWCMEoXMFWIfdf3T3DjUHBQJT",  # Update this with the actual direct download link
-    "Butterfly VGG16":"https://drive.google.com/uc?export=download&id=1Mz8yeVckw85VEIqgrsaLDVivyihtp7hW",
+    #"Butterfly Model1": "https://drive.google.com/uc?export=download&id=1t8QUiYFOWCMEoXMFWIfdf3T3DjUHBQJT",  # Update this with the actual direct download link
+    "VGG19":"https://drive.google.com/uc?export=download&id=1Mz8yeVckw85VEIqgrsaLDVivyihtp7hW",
     "MobileNetV2":"https://drive.google.com/uc?export=download&id=19S2Nc3MtQ6pr0i_a4rrf5neHD0EeRBv1",
     "ResNet50V2":"https://drive.google.com/uc?export=download&id=1DX1Oxz0X_JrGHCsfMDVu9lXT4lkr4ziZ"
 }
