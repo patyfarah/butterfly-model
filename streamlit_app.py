@@ -186,7 +186,7 @@ if uploaded_file is not None:
         f"""
         <div style="background-color: #f8f8f8; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
             <h2 style="background-color: #4682b4; color: white; padding: 10px;">🦋 Butterfly/Moth Species Prediction 🌿</h2>
-            <h3 style="font-size: 24px; color: #2e8b57;">{class_name} {predicted_class}</h3>
+            <h3 style="font-size: 24px; color: #2e8b57;">{class_name} - {predicted_class}</h3>
             <p style="font-size: 18px; color: #4169e1;">Confidence: {confidence * 100:.2f}%</p>
         </div>
         """,
