@@ -175,7 +175,7 @@ if uploaded_file is not None:
     
     # Get butterfly name from dictionary
     class_mapping = dic_butterfly
-    class_name = next((name for name, index in class_mapping.items() if index == predicted_class), f"Class {predicted_class[0]}")
+    class_name = next((name for name, index in class_mapping.items() if index == predicted_class), f"Class {predicted_class}")
 
 
     # Styling the output
