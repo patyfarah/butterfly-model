@@ -121,7 +121,7 @@ dic_butterfly = {
 #@st.cache
 def load_model_from_url(model_url):
     # Download the model using gdown (Make sure the URL is a direct Google Drive link)
-    output_path = "/tmp/butterfly_model.h5"
+    output_path = "/tmp/butterfly_model.keras"
     gdown.download(model_url, output_path, quiet=False)
     model = tf.keras.models.load_model(output_path)
     return model
