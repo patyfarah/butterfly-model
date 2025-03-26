@@ -129,12 +129,12 @@ def load_model_from_url(model_url):
 
 # Function to preprocess the image
 def preprocess_img(uploaded_file):
-    image = image.resize((224, 224))
-    image = tf.keras.preprocessing.image.img_to_array(image)
-    image = tf.expand_dims(image, axis=0)  # Add batch dimension
-    image = tf.keras.applications.mobilenet_v2.preprocess_input(image)
+    img = image.load_img(uploaded_file, target_size=(224, 224))
+    img_array = image.img_to_array(img)
+    img_array = np.expand_dims(img_array, axis=0)
+    img_array = preprocess_input(img_array)
  
-    return image
+    return img_array
 
 # Available model options (make sure the links are direct downloadable URLs)
 model_options = {
