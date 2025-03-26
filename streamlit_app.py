@@ -13,7 +13,7 @@ from io import BytesIO
 st.set_page_config(page_title="Butterfly Classification Model", layout="centered")
 
 # Welcome message
-st.markdown("<h1 style='color: #e8209c;'>Welcome to the Butterfly Model</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='color: #3366ff;'>Welcome to the Butterfly Model</h1>", unsafe_allow_html=True)
 
 # Butterfly dictionary
 dic_butterfly = {
