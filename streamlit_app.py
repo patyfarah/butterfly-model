@@ -9,8 +9,6 @@ import os
 from io import BytesIO
 
 
-@st.cache_resource
-
 # Streamlit App
 st.set_page_config(page_title="Butterfly Classification Model", layout="centered")
 
@@ -121,7 +119,7 @@ dic_butterfly = {
  np.str_('ZEBRA LONG WING'): 99}
 
 # Function to download and load the model
-
+@st.cache_resource
 def load_model_from_url(model_url):
     # Download the model using gdown (Make sure the URL is a direct Google Drive link)
     output_path = "/tmp/butterfly_model.keras"
