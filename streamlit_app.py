@@ -11,7 +11,7 @@ import os
 import io
 
 # Streamlit App
-st.set_page_config(page_title="Butterfly Classification Model", layout="wide")
+st.set_page_config(page_title="Butterfly Classification Model", layout="centered")
 
 # Added a welcoming message with formatted text
 welcome_text = st.markdown("<div style='text-align: left; padding: 20px;'><h1 style='color: #e8209c; display: inline-block;>Welcome</h1></div>", unsafe_allow_html=True)
