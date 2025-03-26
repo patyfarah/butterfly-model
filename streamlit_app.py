@@ -163,7 +163,7 @@ uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
 if uploaded_file is not None:
     # Display uploaded image
-    st.image(uploaded_file, caption='Uploaded Image', use_column_width=True)
+    st.image(uploaded_file, caption='Uploaded Image', use_container_width=True)
     
     # Preprocess the image
     img_array = preprocess_img(uploaded_file)
